@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using apiUniversidade.Context;
 using apiUniversidade.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,30 +15,21 @@ namespace apiUniversidade.Controllers
     public class AlunoController : Controller
     {
         private readonly ILogger<AlunoController> _logger;
+        private readonly ApiUniversidadeContext _context;
 
-        public AlunoController(ILogger<AlunoController> logger)
+        public AlunoController(ILogger<AlunoController> logger, ApiUniversidadeContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [HttpGet(Name="alunos")]
-        public List<Aluno> GetAlunos(){
-            List<Aluno> alunos = new List<Aluno>();
-            alunos.Add(new Aluno{
-                Nome = "Joãozinho",
-                DataNascimento = new DateTime(2010,01,01),
-                Cpf = "123.123.123-12"
-            });
-            alunos.Add(new Aluno{
-                Nome = "Fulaninho",
-                DataNascimento = new DateTime(2008,02,02),
-                Cpf = "321.321.321-32"
-            });
-            alunos.Add(new Aluno{
-                Nome = "Mariazinha",
-                DataNascimento = new DateTime(2009,03,03),
-                Cpf = "213.213.213-21"
-            });
+        public ActionResult<IEnumerable<Aluno>> GetAlunos(){
+
+            var alunos = _context.Alunos.ToList();
+            if(alunos is null)
+                return NotFound();
+
             return alunos;
         }
     }
