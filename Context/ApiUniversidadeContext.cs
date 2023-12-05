@@ -4,9 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using apiUniversidade.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace apiUniversidade.Context;
-public class ApiUniversidadeContext : DbContext
+public class ApiUniversidadeContext : IdentityDbContext
 {
     public ApiUniversidadeContext(DbContextOptions options) : base(options){}
 

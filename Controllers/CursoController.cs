@@ -5,18 +5,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using apiUniversidade.Context;
 using apiUniversidade.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace apiUniversidade.Controllers;
 
+[Authorize(AuthenticationSchemes = "Bearer")]
 [ApiController]
 [Route("[controller]")]
 public class CursoController : Controller
 {
     private readonly ILogger<CursoController> _logger;
     private readonly ApiUniversidadeContext _context;
+
 
     public CursoController(ILogger<CursoController> logger, ApiUniversidadeContext context)
     {
